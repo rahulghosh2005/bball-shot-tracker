@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shot Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="loader">
+    <div class="loader-ring"></div>
+    <p id="loader-text">Loading models...</p>
+  </div>
+
+  <video id="webcam" autoplay muted playsinline></video>
+  <canvas id="canvas"></canvas>
+
+  <!-- Stats bar -->
+  <div id="stats-bar">
+    <div class="stat-block">
+      <span class="stat-num" id="made-count">0</span>
+      <span class="stat-label">MADE</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num" id="miss-count">0</span>
+      <span class="stat-label">MISSED</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num" id="pct-count">--%</span>
+      <span class="stat-label">ACCURACY</span>
+    </div>
+  </div>
+
+  <!-- Shot feedback flash -->
+  <div id="shot-feedback"></div>
+
+  <!-- Bottom-left info -->
+  <div id="info-bar">
+    <span id="fps-display">-- fps</span>
+    <span id="detect-display"></span>
+    <span id="angle-display"></span>
+  </div>
+
+  <!-- Controls -->
+  <div id="controls">
+    <button id="set-hoop-btn">SET HOOP</button>
+    <button id="reset-btn">RESET</button>
+    <button id="toggle-panel-btn">&#9881;</button>
+    <div id="settings-panel" class="hidden">
+      <div class="setting-row">
+        <label>Camera</label>
+        <select id="camera-select"><option>Loading...</option></select>
+      </div>
+      <div class="setting-row">
+        <label>Show Skeleton</label>
+        <label class="toggle"><input type="checkbox" id="show-skeleton" checked /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <label>Show Hands</label>
+        <label class="toggle"><input type="checkbox" id="show-hands" checked /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <label>Show Ball Box</label>
+        <label class="toggle"><input type="checkbox" id="show-ball" checked /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <label>Show Shot Trails</label>
+        <label class="toggle"><input type="checkbox" id="show-trails" checked /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <label>Camera Feed Opacity</label>
+        <input type="range" id="opacity-slider" min="0" max="100" value="70" />
+      </div>
+      <div class="setting-row">
+        <button id="fullscreen-btn">Fullscreen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hoop mode indicator -->
+  <div id="hoop-mode-label" class="hidden">CLICK ON SCREEN TO SET HOOP</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.3/dist/pose-detection.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.1/dist/hand-pose-detection.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
